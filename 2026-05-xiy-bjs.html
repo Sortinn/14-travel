@@ -448,6 +448,34 @@
     height: 1px;
     background: var(--paper-mid);
   }
+  .spot-ticket {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 10.5px;
+    color: var(--accent);
+    background: #fdeee8;
+    border-radius: 4px;
+    padding: 2px 8px;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+  }
+  .hotel-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hotel-badge-todo {
+    background: #fdeee8;
+    color: var(--accent);
+    border: 1px dashed var(--accent-soft);
+  }
+  .hotel-badge-stay {
+    background: #eef5ee;
+    color: var(--sage);
+  }
 </style>
 </head>
 <body>
@@ -455,9 +483,9 @@
 <!-- HERO -->
 <div class="hero">
   <div class="deco-char">旅</div>
-  <div class="hero-badge">2025 五一长假</div>
+  <div class="hero-badge">2026 五一长假</div>
   <h1>西安 <span>→</span> 北京<br>七日自驾</h1>
-  <p class="hero-sub">May 1 – 7, 2025 &nbsp;·&nbsp; 从关中出发，穿越中原</p>
+  <p class="hero-sub">May 1 – 7, 2026 &nbsp;·&nbsp; 从关中出发，穿越中原</p>
   <div class="hero-stats">
     <div class="hero-stat">
       <span class="num">7</span>
@@ -502,9 +530,125 @@
   </div>
   <div class="route-line"></div>
   <div class="route-city">
+    <div class="dot"></div>
+    <span>石家庄</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
     <div class="dot end"></div>
     <span>北京</span>
   </div>
+</div>
+
+<!-- ROUTE MAP -->
+<div class="section-label">
+  <span>路线地图</span>
+</div>
+<div style="margin: 0 24px 20px;">
+  <svg viewBox="0 0 320 265" xmlns="http://www.w3.org/2000/svg"
+       style="width:100%;height:auto;display:block;border:1px solid #e8dcc8;border-radius:12px;background:#faf6ef;">
+    <defs>
+      <linearGradient id="rg" x1="0%" y1="100%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#b85c38"/>
+        <stop offset="100%" stop-color="#c8973a"/>
+      </linearGradient>
+    </defs>
+
+    <!-- 省界（简化）：陕 | 晋豫 at lon110→x88；晋 | 冀 at lon114→x204；豫北边界 lat35.1→y191 -->
+    <line x1="88"  y1="0"   x2="88"  y2="265" stroke="#ddd0be" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="204" y1="0"   x2="204" y2="265" stroke="#ddd0be" stroke-width="0.8" stroke-dasharray="4,3"/>
+    <line x1="88"  y1="191" x2="204" y2="191" stroke="#ddd0be" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+    <!-- 省名 -->
+    <text x="44"  y="155" text-anchor="middle" font-size="8.5" fill="#8a7968" fill-opacity="0.45" letter-spacing="3">陕西</text>
+    <text x="146" y="238" text-anchor="middle" font-size="8.5" fill="#8a7968" fill-opacity="0.45" letter-spacing="3">河南</text>
+    <text x="130" y="72"  text-anchor="middle" font-size="8.5" fill="#8a7968" fill-opacity="0.45" letter-spacing="3">山西</text>
+    <text x="256" y="165" text-anchor="middle" font-size="8.5" fill="#8a7968" fill-opacity="0.45" letter-spacing="3">河北</text>
+
+    <!-- 里程 & 用时标注 -->
+    <!-- 西安→洛阳 -->
+    <rect x="81" y="201" width="55" height="11" rx="2" fill="#faf6ef" fill-opacity="0.88"/>
+    <text x="108" y="210" text-anchor="middle" font-size="7.5" fill="#8a7968">240km · 3h</text>
+    <!-- 洛阳→云台山 -->
+    <text x="153" y="200" text-anchor="end" font-size="7.5" fill="#8a7968">130km · 1.5h</text>
+    <!-- 云台山→平遥 -->
+    <rect x="172" y="150" width="55" height="11" rx="2" fill="#faf6ef" fill-opacity="0.88"/>
+    <text x="199" y="159" text-anchor="middle" font-size="7.5" fill="#8a7968">400km · 4.5h</text>
+    <!-- 平遥→太原 -->
+    <rect x="163" y="108" width="42" height="11" rx="2" fill="#faf6ef" fill-opacity="0.88"/>
+    <text x="184" y="117" text-anchor="middle" font-size="7.5" fill="#8a7968">80km · 1h</text>
+    <!-- 太原→石家庄 -->
+    <rect x="158" y="85" width="55" height="11" rx="2" fill="#faf6ef" fill-opacity="0.88"/>
+    <text x="185" y="94" text-anchor="middle" font-size="7.5" fill="#8a7968">250km · 2.5h</text>
+    <!-- 石家庄→北京 -->
+    <rect x="230" y="60" width="50" height="11" rx="2" fill="#faf6ef" fill-opacity="0.88"/>
+    <text x="255" y="69" text-anchor="middle" font-size="7.5" fill="#8a7968">280km · 3h</text>
+
+    <!-- 路线光晕 -->
+    <polyline points="56,219 160,206 186,189 151,123 161,101 218,97 273,35"
+              fill="none" stroke="#d4835f" stroke-width="8" stroke-opacity="0.10"
+              stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- 路线主线 -->
+    <polyline points="56,219 160,206 186,189 151,123 161,101 218,97 273,35"
+              fill="none" stroke="url(#rg)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- ── 城市点 ── -->
+    <!-- 西安 出发 -->
+    <circle cx="56"  cy="219" r="8"   fill="#b85c38" fill-opacity="0.12"/>
+    <circle cx="56"  cy="219" r="5"   fill="#b85c38"/>
+    <circle cx="56"  cy="219" r="2"   fill="white"/>
+    <!-- 洛阳 -->
+    <circle cx="160" cy="206" r="4.5" fill="#2c1f14"/>
+    <circle cx="160" cy="206" r="2"   fill="white"/>
+    <!-- 云台山 -->
+    <circle cx="186" cy="189" r="4.5" fill="#7a9e7e"/>
+    <circle cx="186" cy="189" r="2"   fill="white"/>
+    <!-- 平遥 -->
+    <circle cx="151" cy="123" r="4.5" fill="#2c1f14"/>
+    <circle cx="151" cy="123" r="2"   fill="white"/>
+    <!-- 晋祠（路过） -->
+    <circle cx="161" cy="101" r="3"   fill="#9a7a60"/>
+    <circle cx="161" cy="101" r="1.2" fill="white"/>
+    <!-- 石家庄 -->
+    <circle cx="218" cy="97"  r="4.5" fill="#2c1f14"/>
+    <circle cx="218" cy="97"  r="2"   fill="white"/>
+    <!-- 北京 终点 -->
+    <circle cx="273" cy="35"  r="8"   fill="#c8973a" fill-opacity="0.12"/>
+    <circle cx="273" cy="35"  r="5"   fill="#c8973a"/>
+    <circle cx="273" cy="35"  r="2"   fill="white"/>
+
+    <!-- ── 标注 ── -->
+    <!-- 西安 -->
+    <text x="56"  y="234" text-anchor="middle" font-size="11"  fill="#2c1f14" letter-spacing="1">西安</text>
+    <text x="56"  y="246" text-anchor="middle" font-size="8.5" fill="#b85c38">D1 出发</text>
+    <!-- 洛阳 -->
+    <text x="165" y="220" text-anchor="start"  font-size="11"  fill="#2c1f14" letter-spacing="1">洛阳</text>
+    <text x="165" y="231" text-anchor="start"  font-size="8.5" fill="#8a7968">D1–2</text>
+    <!-- 云台山 -->
+    <text x="194" y="186" text-anchor="start"  font-size="10"  fill="#2c1f14" letter-spacing="0.5">云台山</text>
+    <text x="194" y="197" text-anchor="start"  font-size="8.5" fill="#8a7968">D3</text>
+    <!-- 平遥 -->
+    <text x="144" y="119" text-anchor="end"    font-size="11"  fill="#2c1f14" letter-spacing="1">平遥</text>
+    <text x="144" y="130" text-anchor="end"    font-size="8.5" fill="#8a7968">D4–5</text>
+    <!-- 太原 -->
+    <text x="154" y="96"  text-anchor="end"    font-size="9"   fill="#9a7a60" letter-spacing="0.5">太原</text>
+    <text x="154" y="106" text-anchor="end"    font-size="7.5" fill="#9a7a60">D6 路过</text>
+    <!-- 石家庄 -->
+    <text x="226" y="93"  text-anchor="start"  font-size="10"  fill="#2c1f14" letter-spacing="0.5">石家庄</text>
+    <text x="226" y="104" text-anchor="start"  font-size="8.5" fill="#8a7968">D6</text>
+    <!-- 北京 -->
+    <text x="273" y="23"  text-anchor="middle" font-size="11"  fill="#2c1f14" letter-spacing="1">北京</text>
+    <text x="273" y="12"  text-anchor="middle" font-size="8.5" fill="#c8973a">D7 终点</text>
+
+    <!-- 指北针 -->
+    <polygon points="307,18 304,28 307,26 310,28" fill="#8a7968" fill-opacity="0.5"/>
+    <line x1="307" y1="28" x2="307" y2="36" stroke="#8a7968" stroke-width="0.8" stroke-opacity="0.4"/>
+    <text x="307" y="43" text-anchor="middle" font-size="7.5" fill="#8a7968" fill-opacity="0.5">N</text>
+
+    <!-- 总里程 -->
+    <text x="12" y="257" font-size="7.5" fill="#8a7968" fill-opacity="0.6">全程约 1,380 km · 7 天 · 西安 → 北京</text>
+  </svg>
 </div>
 
 <!-- CARE NOTICE -->
@@ -577,7 +721,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">洛阳老城区 / 龙门附近舒适型酒店</span>
+        <span class="hotel-name">洛阳 · 龙门附近</span>
+        <span class="hotel-badge hotel-badge-todo">待预订</span>
       </div>
     </div>
   </div>
@@ -602,6 +747,7 @@
               <div class="spot-desc">UNESCO 世界文化遗产，沿伊河岸边漫步即可游览，路面平坦，全程约 2 公里，无需爬山。奉先寺卢舍那大佛雄伟庄严，是此行必看。</div>
               <span class="tag tag-culture">世界遗产</span>
               <span class="tag tag-easy">轻松步道</span>
+              <div class="spot-ticket">🎫 ¥100/人 · 微信小程序「龙门石窟景区」提前预约 · 五一建议提前5天</div>
             </div>
           </div>
           <div class="spot">
@@ -618,6 +764,7 @@
               <div class="spot-name">洛阳牡丹文化节</div>
               <div class="spot-desc">五一正值牡丹盛开，建议前往国家牡丹园或隋唐城遗址植物园赏花。万紫千红，色彩缤纷，漫步其间尤为舒心惬意。</div>
               <span class="tag tag-nature">五一花海</span>
+              <div class="spot-ticket">🎫 国家牡丹园 ¥60/人 · 美团购票或现场购票均可</div>
             </div>
           </div>
         </div>
@@ -627,7 +774,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">续住洛阳</span>
+        <span class="hotel-name">洛阳 · 续住</span>
+        <span class="hotel-badge hotel-badge-stay">已安排</span>
       </div>
     </div>
   </div>
@@ -661,6 +809,7 @@
               <div class="spot-name">白马寺（顺路）</div>
               <div class="spot-desc">中国第一古刹，距洛阳市区约 12 公里，顺路游览，约 1 小时，古朴宁静，清晨香火悠长。</div>
               <span class="tag tag-culture">中国第一古刹</span>
+              <div class="spot-ticket">🎫 ¥35/人 · 现场购票即可</div>
             </div>
           </div>
           <div class="spot">
@@ -670,6 +819,7 @@
               <div class="spot-desc">全程乘观光车 + 栈道游览，无需爬坡。红色砂岩峡谷色彩绝美，潭瀑峡三叠瀑布清凉迷人，是华北最壮美的峡谷之一。</div>
               <span class="tag tag-nature">5A 景区</span>
               <span class="tag tag-easy">观光车可达</span>
+              <div class="spot-ticket">🎫 ¥115/人（含景区大巴）· 微信小程序「云台山景区」提前预约 · 五一建议提前1周</div>
             </div>
           </div>
         </div>
@@ -679,7 +829,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">焦作修武县 / 云台山景区附近</span>
+        <span class="hotel-name">云台山 · 景区附近</span>
+        <span class="hotel-badge hotel-badge-todo">待预订</span>
       </div>
     </div>
   </div>
@@ -738,7 +889,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">平遥古城内特色民宿 / 院落酒店</span>
+        <span class="hotel-name">平遥古城内 · 五一须提前预订</span>
+        <span class="hotel-badge hotel-badge-todo">待预订</span>
       </div>
     </div>
   </div>
@@ -759,10 +911,11 @@
           <div class="spot">
             <span class="spot-time">上午</span>
             <div class="spot-content">
-              <div class="spot-name">平遥古城墙</div>
+              <div class="spot-name">平遥古城 · 城墙 & 日升昌等景点</div>
               <div class="spot-desc">完整保存的明代县城城墙，登上城墙可俯瞰全城，感受古城格局。城墙顶部平坦宽阔，步行轻松。</div>
               <span class="tag tag-culture">明代遗址</span>
               <span class="tag tag-easy">步道平坦</span>
+              <div class="spot-ticket">🎫 联票 ¥125/人（含城墙、日升昌等主要景点）· 古城游客中心购票或微信小程序「平遥古城旅游」</div>
             </div>
           </div>
           <div class="spot">
@@ -788,7 +941,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">续住平遥古城</span>
+        <span class="hotel-name">平遥古城 · 续住</span>
+        <span class="hotel-badge hotel-badge-stay">已安排</span>
       </div>
     </div>
   </div>
@@ -823,6 +977,7 @@
               <div class="spot-desc">中国最早的皇家祭祀园林，古木参天，泉水潺潺，园内有千年常流泉"难老泉"，清幽宜人。全程平地游览，约 1.5 小时。</div>
               <span class="tag tag-culture">北魏古刹</span>
               <span class="tag tag-easy">平坦园林</span>
+              <div class="spot-ticket">🎫 ¥80/人 · 美团购票或现场购票均可</div>
             </div>
           </div>
           <div class="spot">
@@ -839,7 +994,8 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           住宿建议
         </div>
-        <span class="hotel-name">石家庄市区品牌连锁酒店</span>
+        <span class="hotel-name">石家庄 · 高铁站附近</span>
+        <span class="hotel-badge hotel-badge-todo">待预订</span>
       </div>
     </div>
   </div>
@@ -904,24 +1060,24 @@
 <div class="tips-section">
   <div class="tips-title">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-    恢复期专项提醒
+    出行小贴士
   </div>
   <div class="tips-grid">
     <div class="tip-item">
-      <strong>饮食调养</strong>
-      <p>多食温热易消化食物，洛阳水席、山西面食均适合，忌生冷辛辣。</p>
+      <strong>沿途饮食</strong>
+      <p>洛阳水席、山西面食各有风味，尽量在当地老店用餐，感受地道滋味。</p>
     </div>
     <div class="tip-item">
-      <strong>行走控制</strong>
-      <p>每日步行建议不超过 1 小时，多用观光车或在景区租用电动代步车。</p>
+      <strong>游览节奏</strong>
+      <p>景点无需全部打卡，哪里舒服就多停留，观光车能坐就坐，轻松优先。</p>
     </div>
     <div class="tip-item">
-      <strong>情绪调节</strong>
-      <p>山水相伴，放松心情是此行最大目的。不必打卡，哪里美就在哪里多停留。</p>
+      <strong>放松心态</strong>
+      <p>路上的风景和两个人的对话，才是旅行最好的部分。</p>
     </div>
     <div class="tip-item">
       <strong>随身必备</strong>
-      <p>艾绒暖腰带、保温水杯、防风外套，五月北方昼夜温差约 12°C。</p>
+      <p>保温水杯、防风外套，五月北方昼夜温差约 12°C，早晚注意添衣。</p>
     </div>
   </div>
 </div>
