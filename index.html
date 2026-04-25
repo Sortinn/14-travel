@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十四行记 · 自驾旅行记录</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2c1f14;
+    --ink-mid: #5a3e28;
+    --ink-light: #9a7a60;
+    --paper: #faf6ef;
+    --paper-warm: #f3ead8;
+    --paper-mid: #e8dcc8;
+    --accent: #b85c38;
+    --accent-soft: #d4835f;
+    --gold: #c8973a;
+    --gold-light: #e8c470;
+    --sage: #7a9e7e;
+    --stone: #8a7968;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    padding: 56px 28px 44px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(200,151,58,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse at 15% 85%, rgba(184,92,56,0.12) 0%, transparent 55%);
+  }
+  .deco-char {
+    position: absolute;
+    right: 20px;
+    bottom: 16px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 96px;
+    color: rgba(200,151,58,0.06);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    opacity: 0.7;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 40px;
+    color: #f5edd8;
+    line-height: 1.2;
+    letter-spacing: 4px;
+    position: relative;
+  }
+  .hero-desc {
+    margin-top: 12px;
+    font-size: 13px;
+    color: rgba(245,237,216,0.45);
+    letter-spacing: 1.5px;
+    position: relative;
+  }
+  .hero-line {
+    margin-top: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,151,58,0.4), transparent);
+    position: relative;
+  }
+  .hero-meta {
+    margin-top: 14px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+  .hero-meta span {
+    font-size: 11px;
+    color: rgba(245,237,216,0.35);
+    letter-spacing: 1px;
+  }
+  .hero-meta strong {
+    color: rgba(245,237,216,0.7);
+    font-weight: 400;
+  }
+
+  /* ─── YEAR GROUP ─── */
+  .year-group {
+    padding: 28px 24px 0;
+  }
+  .year-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .year-label span {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 20px;
+    color: var(--ink);
+    letter-spacing: 2px;
+  }
+  .year-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--paper-mid);
+  }
+
+  /* ─── TRIP CARD ─── */
+  .trip-card {
+    display: block;
+    text-decoration: none;
+    background: white;
+    border: 1px solid var(--paper-mid);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .trip-card:active {
+    transform: scale(0.985);
+    border-color: var(--accent-soft);
+  }
+  .trip-card-top {
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid var(--paper-warm);
+  }
+  .trip-route {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .trip-route .arrow {
+    color: var(--accent-soft);
+    margin: 0 4px;
+    font-size: 14px;
+  }
+  .trip-title {
+    font-size: 12px;
+    color: var(--stone);
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+  .trip-card-bottom {
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .trip-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+  }
+  .tag-drive { background: #fdeee8; color: var(--accent); }
+  .tag-days { background: var(--paper-warm); color: var(--stone); }
+  .tag-season { background: #eef5ee; color: var(--sage); }
+  .trip-date {
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+  .trip-km {
+    font-size: 10px;
+    color: var(--ink-light);
+  }
+
+  /* ─── PLACEHOLDER ─── */
+  .placeholder-card {
+    border: 1px dashed var(--paper-mid);
+    border-radius: 12px;
+    padding: 22px 18px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .placeholder-card p {
+    font-size: 12px;
+    color: var(--stone);
+    letter-spacing: 1px;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 32px 24px 28px;
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 2px;
+    border-top: 1px solid var(--paper-mid);
+    margin-top: 20px;
+  }
+  .footer .sub {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--paper-mid);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="deco-char">行</div>
+  <div class="hero-eyebrow">ROAD TRIP JOURNAL</div>
+  <h1>十四行记</h1>
+  <p class="hero-desc">自驾 · 行旅 · 记录</p>
+  <div class="hero-line"></div>
+  <div class="hero-meta">
+    <span><strong id="trip-count">1</strong> 次旅行</span>
+    <span><strong id="km-count">1,380</strong> 公里</span>
+    <span><strong id="city-count">6</strong> 座城市</span>
+  </div>
+</div>
+
+<div class="year-group">
+  <div class="year-label">
+    <span>2026</span>
+  </div>
+
+  <a class="trip-card" href="2026-05-xiy-bjs.html">
+    <div class="trip-card-top">
+      <div class="trip-route">
+        西安<span class="arrow">→</span>洛阳<span class="arrow">→</span>平遥<span class="arrow">→</span>北京
+      </div>
+      <div class="trip-title">五一自驾 · 穿越中原与山西</div>
+    </div>
+    <div class="trip-card-bottom">
+      <div class="trip-tags">
+        <span class="tag tag-drive">自驾</span>
+        <span class="tag tag-days">7 天</span>
+        <span class="tag tag-season">春季</span>
+      </div>
+      <div style="text-align:right;">
+        <div class="trip-date">2026.5.1 – 5.7</div>
+        <div class="trip-km">约 1,380 km</div>
+      </div>
+    </div>
+  </a>
+
+  <div class="placeholder-card">
+    <p>下一次旅行，待续……</p>
+  </div>
+</div>
+
+<div class="footer">
+  十四行记 · 两人同行
+  <span class="sub">github.io · static travel journal</span>
+</div>
+
+</body>
+</html>
