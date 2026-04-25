@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五一自驾 · 西安→北京</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2c1f14;
+    --ink-mid: #5a3e28;
+    --ink-light: #9a7a60;
+    --paper: #faf6ef;
+    --paper-warm: #f3ead8;
+    --paper-mid: #e8dcc8;
+    --accent: #b85c38;
+    --accent-soft: #d4835f;
+    --gold: #c8973a;
+    --gold-light: #e8c470;
+    --sage: #7a9e7e;
+    --sage-light: #a8c5aa;
+    --stone: #8a7968;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    padding: 48px 28px 36px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 80% 20%, rgba(200,151,58,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(184,92,56,0.14) 0%, transparent 55%);
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+    background: rgba(200,151,58,0.15);
+    border: 1px solid rgba(200,151,58,0.35);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 34px;
+    color: #f5edd8;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    position: relative;
+  }
+  .hero h1 span {
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: rgba(245,237,216,0.55);
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 28px;
+    position: relative;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.05);
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 10px;
+    color: rgba(245,237,216,0.45);
+    letter-spacing: 1px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── ROUTE BAR ─── */
+  .route-bar {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-mid);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .route-bar::-webkit-scrollbar { display: none; }
+  .route-city {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .route-city .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-bottom: 6px;
+  }
+  .route-city .dot.end { background: var(--gold); }
+  .route-city span {
+    font-size: 11px;
+    color: var(--ink-mid);
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+  .route-line {
+    flex: 1;
+    min-width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-soft), var(--gold));
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .route-line::after {
+    content: '›';
+    position: absolute;
+    right: -2px;
+    top: -8px;
+    font-size: 10px;
+    color: var(--gold);
+  }
+
+  /* ─── CARE NOTICE ─── */
+  .care-notice {
+    margin: 20px 24px 0;
+    background: linear-gradient(135deg, #fdf6ee, #f8eedd);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+  }
+  .care-notice .care-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .care-notice p {
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  /* ─── SECTION ─── */
+  .section-label {
+    padding: 28px 24px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 3px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-label span {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 16px;
+    color: var(--ink);
+    letter-spacing: 2px;
+  }
+
+  /* ─── DAY CARDS ─── */
+  .days {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .day-card {
+    position: relative;
+    padding-left: 52px;
+    padding-bottom: 32px;
+  }
+  .day-card:last-child { padding-bottom: 0; }
+  .day-card::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 36px;
+    bottom: 0;
+    width: 1px;
+    background: var(--paper-mid);
+  }
+  .day-card:last-child::before { display: none; }
+  .day-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .day-num span {
+    font-size: 7px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+  .day-num strong {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .day-card.driving .day-num { background: var(--accent); }
+  .day-card.explore .day-num { background: var(--sage); }
+
+  .day-inner {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--paper-mid);
+    overflow: hidden;
+  }
+  .day-header {
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid var(--paper-warm);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .day-header h3 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 17px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .day-header .date-tag {
+    font-size: 10px;
+    color: var(--stone);
+    background: var(--paper-warm);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    margin-left: 8px;
+    margin-top: 2px;
+  }
+  .drive-info {
+    display: flex;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-mid);
+  }
+  .drive-info .di {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    color: var(--ink-light);
+  }
+  .drive-info .di svg {
+    width: 13px;
+    height: 13px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .day-body {
+    padding: 14px 16px;
+  }
+  .spot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .spot {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .spot-time {
+    font-size: 10px;
+    color: var(--accent-soft);
+    width: 28px;
+    flex-shrink: 0;
+    padding-top: 1px;
+    letter-spacing: 0.3px;
+  }
+  .spot-content {}
+  .spot-name {
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .spot-desc {
+    font-size: 11.5px;
+    color: var(--stone);
+    margin-top: 2px;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+  .tag-easy { background: #eef5ee; color: var(--sage); }
+  .tag-culture { background: #fdf3e8; color: var(--gold); }
+  .tag-nature { background: #e8f3f0; color: #5a9e8a; }
+  .tag-food { background: #fdeee8; color: var(--accent-soft); }
+  .tag-rest { background: #f3eef8; color: #8a6aaa; }
+
+  .day-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hotel-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--stone);
+  }
+  .hotel-info svg { width: 12px; height: 12px; opacity: 0.7; }
+  .hotel-name {
+    font-size: 11.5px;
+    color: var(--ink-mid);
+  }
+
+  /* ─── TIPS ─── */
+  .tips-section {
+    margin: 0 24px 24px;
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 22px 20px;
+    color: rgba(245,237,216,0.85);
+  }
+  .tips-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .tip-item {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 12px 12px;
+  }
+  .tip-item .tip-icon {
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .tip-item p {
+    font-size: 11px;
+    line-height: 1.6;
+    color: rgba(245,237,216,0.65);
+  }
+  .tip-item strong {
+    display: block;
+    font-size: 12px;
+    color: var(--gold-light);
+    margin-bottom: 3px;
+    font-weight: 400;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 2px;
+    border-top: 1px solid var(--paper-mid);
+  }
+  .heart { color: var(--accent-soft); }
+
+  /* Decorative Chinese character */
+  .deco-char {
+    position: absolute;
+    right: 24px;
+    bottom: 20px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 72px;
+    color: rgba(200,151,58,0.07);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Divider */
+  .divider {
+    margin: 0 24px 0;
+    height: 1px;
+    background: var(--paper-mid);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="deco-char">旅</div>
+  <div class="hero-badge">2025 五一长假</div>
+  <h1>西安 <span>→</span> 北京<br>七日自驾</h1>
+  <p class="hero-sub">May 1 – 7, 2025 &nbsp;·&nbsp; 从关中出发，穿越中原</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">7</span>
+      <span class="lbl">天数</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">1380</span>
+      <span class="lbl">总里程 km</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">5</span>
+      <span class="lbl">途经城市</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROUTE BAR -->
+<div class="route-bar">
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>西安</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>洛阳</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>云台山</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>平遥</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>太原</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot end"></div>
+    <span>北京</span>
+  </div>
+</div>
+
+<!-- CARE NOTICE -->
+<div class="care-notice">
+  <div class="care-title">温柔出行提示</div>
+  <p>本次行程以<strong>轻松舒缓</strong>为主。景点均可乘车游览，避免长时间步行与爬坡，每日驾车时长控制在 4 小时内，住宿优先选择舒适型酒店。</p>
+</div>
+
+<!-- DAY LIST -->
+<div class="section-label">
+  <span>行程安排</span>
+</div>
+
+<div class="days">
+
+  <!-- DAY 1 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>1</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>西安 → 洛阳<br>启程，牡丹之都</h3>
+        <span class="date-tag">5月1日 周四</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 240 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          驾车约 3 小时
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          G30 高速
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">西安出发，高速前往洛阳</div>
+              <div class="spot-desc">建议 9:00 出发，避开节日早高峰。沿 G30 连霍高速，沿途经渭河平原与秦岭北麓，风景开阔。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">午后</span>
+            <div class="spot-content">
+              <div class="spot-name">抵达洛阳，安顿入住</div>
+              <div class="spot-desc">下午抵达后先休息，避免第一天过度疲劳。</div>
+              <span class="tag tag-rest">注意休息</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">傍晚</span>
+            <div class="spot-content">
+              <div class="spot-name">洛邑古城夜游</div>
+              <div class="spot-desc">隋唐历史文化街区，灯光璀璨，步行轻游，感受洛阳夜韵。可在古城内品尝洛阳水席、燕菜汤等。</div>
+              <span class="tag tag-food">美食推荐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">洛阳老城区 / 龙门附近舒适型酒店</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card explore">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>2</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>洛阳深度游<br>龙门石窟 & 牡丹节</h3>
+        <span class="date-tag">5月2日 周五</span>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">龙门石窟</div>
+              <div class="spot-desc">UNESCO 世界文化遗产，沿伊河岸边漫步即可游览，路面平坦，全程约 2 公里，无需爬山。奉先寺卢舍那大佛雄伟庄严，是此行必看。</div>
+              <span class="tag tag-culture">世界遗产</span>
+              <span class="tag tag-easy">轻松步道</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">中午</span>
+            <div class="spot-content">
+              <div class="spot-name">午休 + 洛阳水席</div>
+              <div class="spot-desc">洛阳水席是国家级非物质文化遗产，汤汤水水，暖胃滋养，特别适合恢复期食用。</div>
+              <span class="tag tag-food">强烈推荐</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">下午</span>
+            <div class="spot-content">
+              <div class="spot-name">洛阳牡丹文化节</div>
+              <div class="spot-desc">五一正值牡丹盛开，建议前往国家牡丹园或隋唐城遗址植物园赏花。万紫千红，色彩缤纷，漫步其间尤为舒心惬意。</div>
+              <span class="tag tag-nature">五一花海</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">续住洛阳</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>3</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>洛阳 → 云台山<br>太行奇景</h3>
+        <span class="date-tag">5月3日 周六</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 130 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          约 1.5 小时
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">白马寺（顺路）</div>
+              <div class="spot-desc">中国第一古刹，距洛阳市区约 12 公里，顺路游览，约 1 小时，古朴宁静，清晨香火悠长。</div>
+              <span class="tag tag-culture">中国第一古刹</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">午后</span>
+            <div class="spot-content">
+              <div class="spot-name">云台山 · 红石峡 / 潭瀑峡</div>
+              <div class="spot-desc">全程乘观光车 + 栈道游览，无需爬坡。红色砂岩峡谷色彩绝美，潭瀑峡三叠瀑布清凉迷人，是华北最壮美的峡谷之一。</div>
+              <span class="tag tag-nature">5A 景区</span>
+              <span class="tag tag-easy">观光车可达</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">焦作修武县 / 云台山景区附近</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>4</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>云台山 → 平遥<br>穿越山西，千年古城</h3>
+        <span class="date-tag">5月4日 周日</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 400 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          约 4.5 小时
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">早出发，高速北上山西</div>
+              <div class="spot-desc">今日驾车较长，建议 8:30 出发，中途在服务区充分休息。沿 G59、G55 高速穿越太行山，隧道穿山风景壮观。</div>
+              <span class="tag tag-rest">今日驾车稍长</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">傍晚</span>
+            <div class="spot-content">
+              <div class="spot-name">抵达平遥古城</div>
+              <div class="spot-desc">入城后漫步南大街，感受明清市井气息。夜幕降临，古城灯笼亮起，格外温柔动人。</div>
+              <span class="tag tag-culture">UNESCO 世界遗产</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">夜间</span>
+            <div class="spot-content">
+              <div class="spot-name">古城夜市</div>
+              <div class="spot-desc">平遥牛肉、碗托、油茶，夜市烟火气十足，漫步享用即可。</div>
+              <span class="tag tag-food">平遥牛肉必吃</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">平遥古城内特色民宿 / 院落酒店</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-card explore">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>5</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>平遥古城深度游<br>时光慢下来</h3>
+        <span class="date-tag">5月5日 周一</span>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">平遥古城墙</div>
+              <div class="spot-desc">完整保存的明代县城城墙，登上城墙可俯瞰全城，感受古城格局。城墙顶部平坦宽阔，步行轻松。</div>
+              <span class="tag tag-culture">明代遗址</span>
+              <span class="tag tag-easy">步道平坦</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">午前</span>
+            <div class="spot-content">
+              <div class="spot-name">日升昌票号</div>
+              <div class="spot-desc">中国第一家现代银行雏形，了解晋商文化与金融历史，馆内展陈丰富，约 1 小时游览。</div>
+              <span class="tag tag-culture">晋商文化</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">下午</span>
+            <div class="spot-content">
+              <div class="spot-name">古街漫步 + 下午茶休憩</div>
+              <div class="spot-desc">古城商铺林立，手工艺品、土特产随处可见。找一家院落茶馆，点一壶茶，什么都不想，这便是旅行的意义。</div>
+              <span class="tag tag-rest">慢游时光</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">续住平遥古城</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>6</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>平遥 → 晋祠 → 石家庄<br>晋文化收尾</h3>
+        <span class="date-tag">5月6日 周二</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 330 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          约 4 小时
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">晋祠（太原）</div>
+              <div class="spot-desc">中国最早的皇家祭祀园林，古木参天，泉水潺潺，园内有千年常流泉"难老泉"，清幽宜人。全程平地游览，约 1.5 小时。</div>
+              <span class="tag tag-culture">北魏古刹</span>
+              <span class="tag tag-easy">平坦园林</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">午后</span>
+            <div class="spot-content">
+              <div class="spot-name">驾车南下石家庄</div>
+              <div class="spot-desc">沿 G5 京昆高速行驶约 250 km，约 2.5 小时，傍晚抵达石家庄，休整一晚，为明日返京做准备。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">石家庄市区品牌连锁酒店</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>7</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>石家庄 → 北京<br>归途，圆满</h3>
+        <span class="date-tag">5月7日 周三</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 280 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          约 3 小时
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">出发返京</div>
+              <div class="spot-desc">建议 9:00 出发，沿 G4 京港澳高速北上，轻松舒适。五一节后返程高峰已过，路况相对畅通。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">中午</span>
+            <div class="spot-content">
+              <div class="spot-name">抵达北京</div>
+              <div class="spot-desc">中午或下午顺利到家，稍作休整，明日返回工作状态。七天，1380 公里，一路相伴，满载而归。</div>
+              <span class="tag tag-rest">平安到家</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          终点
+        </div>
+        <span class="hotel-name">回到北京的家</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TIPS -->
+<div class="section-label">
+  <span>出行贴士</span>
+</div>
+
+<div class="tips-section">
+  <div class="tips-title">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    恢复期专项提醒
+  </div>
+  <div class="tips-grid">
+    <div class="tip-item">
+      <strong>饮食调养</strong>
+      <p>多食温热易消化食物，洛阳水席、山西面食均适合，忌生冷辛辣。</p>
+    </div>
+    <div class="tip-item">
+      <strong>行走控制</strong>
+      <p>每日步行建议不超过 1 小时，多用观光车或在景区租用电动代步车。</p>
+    </div>
+    <div class="tip-item">
+      <strong>情绪调节</strong>
+      <p>山水相伴，放松心情是此行最大目的。不必打卡，哪里美就在哪里多停留。</p>
+    </div>
+    <div class="tip-item">
+      <strong>随身必备</strong>
+      <p>艾绒暖腰带、保温水杯、防风外套，五月北方昼夜温差约 12°C。</p>
+    </div>
+  </div>
+</div>
+
+<!-- EXTRA TIPS -->
+<div class="section-label">
+  <span>自驾注意事项</span>
+</div>
+
+<div style="margin: 0 24px 24px;">
+  <div style="display: flex; flex-direction: column; gap: 10px;">
+    <div style="display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--paper-mid); border-radius: 8px; padding: 13px 14px;">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--paper-warm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: var(--accent); font-weight: 600;">01</div>
+      <div>
+        <div style="font-size: 13px; color: var(--ink); margin-bottom: 3px;">五一高速免费通行</div>
+        <div style="font-size: 11.5px; color: var(--stone); line-height: 1.6;">5月1日至5日享受7座及以下小客车高速免费，可节省约 200-300 元过路费。</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--paper-mid); border-radius: 8px; padding: 13px 14px;">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--paper-warm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: var(--accent); font-weight: 600;">02</div>
+      <div>
+        <div style="font-size: 13px; color: var(--ink); margin-bottom: 3px;">景区预约提前办</div>
+        <div style="font-size: 11.5px; color: var(--stone); line-height: 1.6;">龙门石窟、云台山均需提前在官方小程序预约购票，节假日门票易售罄。</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--paper-mid); border-radius: 8px; padding: 13px 14px;">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--paper-warm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: var(--accent); font-weight: 600;">03</div>
+      <div>
+        <div style="font-size: 13px; color: var(--ink); margin-bottom: 3px;">导航避开节假日拥堵</div>
+        <div style="font-size: 11.5px; color: var(--stone); line-height: 1.6;">5月1日下午与3日是高峰期，可选高德/百度实时绕行，或适当错峰出发。</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 12px; align-items: flex-start; background: white; border: 1px solid var(--paper-mid); border-radius: 8px; padding: 13px 14px;">
+      <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--paper-warm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 12px; color: var(--accent); font-weight: 600;">04</div>
+      <div>
+        <div style="font-size: 13px; color: var(--ink); margin-bottom: 3px;">住宿早订勿拖延</div>
+        <div style="font-size: 11.5px; color: var(--stone); line-height: 1.6;">平遥古城内民宿五一期间一房难求，请务必提前预订，建议选带独立卫浴的院落客房。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  一路山河壮阔，愿卿安康<span class="heart"> ♥</span>
+</div>
+
+</body>
+</html>
