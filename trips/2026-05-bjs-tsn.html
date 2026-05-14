@@ -622,6 +622,141 @@
   </div>
 </div>
 
+<!-- ACTIVITY MAP -->
+<div class="section-label">
+  <span>市内活动路径</span>
+</div>
+<div style="margin: 0 24px 20px;">
+  <svg viewBox="0 0 340 290" xmlns="http://www.w3.org/2000/svg"
+       style="width:100%;height:auto;display:block;border:1px solid #e8dcc8;border-radius:12px;background:#faf6ef;">
+
+    <!-- 海河 -->
+    <path d="M 305 35 Q 230 95 195 135 Q 150 180 60 260"
+          fill="none" stroke="#7a9e7e" stroke-width="3.5"
+          stroke-opacity="0.4" stroke-linecap="round"/>
+    <text x="278" y="80" font-family="'ZCOOL XiaoWei', serif" font-size="11"
+          fill="#7a9e7e" opacity="0.75" letter-spacing="2">海河</text>
+
+    <!-- 图例 -->
+    <g transform="translate(18, 22)">
+      <circle cx="4" cy="0" r="4" fill="#b85c38"/>
+      <text x="13" y="4" font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#5a3e28">Day 1 · 周六</text>
+      <circle cx="104" cy="0" r="4" fill="#c8973a"/>
+      <text x="113" y="4" font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#5a3e28">Day 2 · 周日</text>
+    </g>
+
+    <!-- 指北针 -->
+    <g transform="translate(318, 28)">
+      <text x="0" y="0" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="9"
+            fill="#9a7a60">N</text>
+      <path d="M 0 4 L 0 16" stroke="#9a7a60" stroke-width="1"/>
+      <path d="M -3 8 L 0 4 L 3 8" fill="none" stroke="#9a7a60" stroke-width="1"/>
+    </g>
+
+    <!-- Day 1 路径（朱砂 · 光晕 + 主线） -->
+    <path d="M 75 230 L 115 210 L 170 185 L 215 150 L 260 115"
+          fill="none" stroke="#b85c38" stroke-width="5"
+          stroke-opacity="0.16" stroke-linecap="round"/>
+    <path d="M 75 230 L 115 210 L 170 185 L 215 150 L 260 115"
+          fill="none" stroke="#b85c38" stroke-width="1.4"
+          stroke-linecap="round"/>
+
+    <!-- Day 2 路径（金 · 光晕 + 主线虚线） -->
+    <path d="M 50 100 L 110 80 L 180 230"
+          fill="none" stroke="#c8973a" stroke-width="5"
+          stroke-opacity="0.16" stroke-linecap="round"/>
+    <path d="M 50 100 L 110 80 L 180 230"
+          fill="none" stroke="#c8973a" stroke-width="1.4"
+          stroke-linecap="round" stroke-dasharray="4 3"/>
+
+    <!-- Day 1 锚点 -->
+    <g>
+      <!-- 桂园（午餐） -->
+      <circle cx="75" cy="230" r="4.5" fill="#b85c38"/>
+      <circle cx="75" cy="230" r="1.8" fill="#faf6ef"/>
+      <text x="75" y="250" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">桂园</text>
+      <text x="75" y="262" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">午餐</text>
+
+      <!-- 五大道（下午） -->
+      <circle cx="115" cy="210" r="4.5" fill="#b85c38"/>
+      <circle cx="115" cy="210" r="1.8" fill="#faf6ef"/>
+      <text x="118" y="206" text-anchor="end"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">五大道</text>
+
+      <!-- 海河边（黄昏） -->
+      <circle cx="170" cy="185" r="4.5" fill="#b85c38"/>
+      <circle cx="170" cy="185" r="1.8" fill="#faf6ef"/>
+      <text x="175" y="181" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">海河边</text>
+      <text x="175" y="193" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">黄昏散步</text>
+
+      <!-- 利顺德（住宿） -->
+      <circle cx="215" cy="150" r="4.5" fill="#b85c38"/>
+      <circle cx="215" cy="150" r="1.8" fill="#faf6ef"/>
+      <text x="220" y="146" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">利顺德</text>
+      <text x="220" y="158" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">住宿</text>
+
+      <!-- 宇航员意风区（晚餐） -->
+      <circle cx="260" cy="115" r="4.5" fill="#b85c38"/>
+      <circle cx="260" cy="115" r="1.8" fill="#faf6ef"/>
+      <text x="260" y="105" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">意风区</text>
+      <text x="260" y="138" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">宇航员 · 晚餐</text>
+    </g>
+
+    <!-- Day 2 锚点 -->
+    <g>
+      <!-- 南楼煎饼（早餐） -->
+      <circle cx="50" cy="100" r="4.5" fill="#c8973a"/>
+      <circle cx="50" cy="100" r="1.8" fill="#faf6ef"/>
+      <text x="50" y="88" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">南楼煎饼</text>
+      <text x="50" y="120" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">早餐</text>
+
+      <!-- 古文化街（上午） -->
+      <circle cx="110" cy="80" r="4.5" fill="#c8973a"/>
+      <circle cx="110" cy="80" r="1.8" fill="#faf6ef"/>
+      <text x="115" y="76" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">古文化街</text>
+      <text x="115" y="93" text-anchor="start"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">上午</text>
+
+      <!-- 登瀛楼（午餐） -->
+      <circle cx="180" cy="230" r="4.5" fill="#c8973a"/>
+      <circle cx="180" cy="230" r="1.8" fill="#faf6ef"/>
+      <text x="180" y="220" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="10"
+            fill="#2c1f14">登瀛楼</text>
+      <text x="180" y="252" text-anchor="middle"
+            font-family="'Noto Serif SC', serif" font-size="8"
+            fill="#8a7968">滨江道 · 午餐</text>
+    </g>
+  </svg>
+</div>
+
 <!-- DAY LIST -->
 <div class="section-label">
   <span>行程安排</span>
