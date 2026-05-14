@@ -402,6 +402,7 @@
     const fontSize = Math.round(size * 0.7);
     return `<svg class="trip-seal" viewBox="0 0 48 48" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" aria-label="第${n}段">
       <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
+      <!-- y: viewBox 中线 24 + 约 35% fontSize 用于视觉居中（基线补偿） -->
       <text x="24" y="${24 + fontSize * 0.35}" text-anchor="middle"
             font-family="'ZCOOL XiaoWei', serif" font-size="${fontSize}"
             fill="var(--paper)" font-weight="600">${n}</text>
@@ -410,10 +411,10 @@
 
   // ====== 自动 hero 统计 ======
   (function updateHeroStats() {
-    const tc = document.getElementById('trip-count');
-    const km = document.getElementById('km-count');
-    if (tc) tc.textContent = trips.length;
-    if (km) km.textContent = trips.reduce((s, t) => s + t.km, 0).toLocaleString();
+    const tcEl = document.getElementById('trip-count');
+    const kmEl = document.getElementById('km-count');
+    if (tcEl) tcEl.textContent = trips.length;
+    if (kmEl) kmEl.textContent = trips.reduce((s, t) => s + t.km, 0).toLocaleString();
     // city-count 保留手填（route 数据未完整时不自动算）
   })();
 </script>
