@@ -1,1 +1,15 @@
+# AI
 CLAUDE.md
+
+# macOS
+.DS_Store
+
+# 编辑器
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# 系统文件
+Thumbs.db
