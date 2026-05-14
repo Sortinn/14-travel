@@ -189,7 +189,7 @@ cp trips/2026-05-xiy-bjs.html trips/2026-05-bjs-tsn.html
   <div class="hero-seal-wrap">
     <svg class="trip-seal" viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-label="第2段">
       <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
-      <text x="24" y="32" text-anchor="middle"
+      <text x="24" y="35.9" text-anchor="middle"
             font-family="'ZCOOL XiaoWei', serif" font-size="34"
             fill="var(--paper)" font-weight="600">2</text>
     </svg>
@@ -932,7 +932,7 @@ EOF
   <div class="hero-seal-wrap">
     <svg class="trip-seal" viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-label="第1段">
       <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
-      <text x="24" y="32" text-anchor="middle"
+      <text x="24" y="35.9" text-anchor="middle"
             font-family="'ZCOOL XiaoWei', serif" font-size="34"
             fill="var(--paper)" font-weight="600">1</text>
     </svg>
