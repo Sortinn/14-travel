@@ -140,13 +140,22 @@
     margin-bottom: 12px;
     transition: border-color 0.2s, transform 0.15s;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+  .trip-card-seal {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    z-index: 2;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+    pointer-events: none;
   }
   .trip-card:active {
     transform: scale(0.985);
     border-color: var(--accent-soft);
   }
   .trip-card-top {
-    padding: 16px 18px 14px;
+    padding: 16px 58px 14px 18px;
     border-bottom: 1px solid var(--paper-warm);
   }
   .trip-route {
@@ -476,7 +485,7 @@
     <span>2026</span>
   </div>
 
-  <a class="trip-card" href="trips/2026-05-bjs-tsn.html">
+  <a class="trip-card" id="trip-2" href="trips/2026-05-bjs-tsn.html">
     <div class="trip-card-top">
       <div class="trip-route">
         北京<span class="arrow">→</span>天津
@@ -497,7 +506,7 @@
     </div>
   </a>
 
-  <a class="trip-card" href="trips/2026-05-xiy-bjs.html">
+  <a class="trip-card" id="trip-1" href="trips/2026-05-xiy-bjs.html">
     <div class="trip-card-top">
       <div class="trip-route">
         西安<span class="arrow">→</span>洛阳<span class="arrow">→</span>平遥<span class="arrow">→</span>北京
@@ -728,6 +737,20 @@
       b.classList.toggle('active', b.dataset.mode === mode);
     });
     if (mode === 'year') renderYearView(); else renderMonthView();
+  })();
+
+  // ====== 卡片左上角朱印注入 ======
+  (function injectCardSeals() {
+    trips.forEach(t => {
+      const card = document.getElementById(t.id);
+      if (!card) return;
+      const top = card.querySelector('.trip-card-top');
+      if (!top || card.querySelector('.trip-card-seal')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'trip-card-seal';
+      wrap.innerHTML = tripBadge(t.seq, { size: 36 });
+      card.appendChild(wrap);
+    });
   })();
 </script>
 

@@ -564,6 +564,14 @@
     background: rgba(255, 255, 255, 0.06);
     border: 1px dashed rgba(255, 255, 255, 0.2);
   }
+
+  /* 朱印徽章定位（hero 右上） */
+  .hero-seal-wrap {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+  }
 </style>
 </head>
 <body>
@@ -576,6 +584,14 @@
   <p class="hero-sub">May 1 – 7, 2026 &nbsp;·&nbsp; 从关中出发，晋地古城，津门入京</p>
   <div style="margin-top: 12px;">
     <span class="trip-status on-dark" data-status="completed">已完成</span>
+  </div>
+  <div class="hero-seal-wrap">
+    <svg class="trip-seal" viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-label="第1段">
+      <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
+      <text x="24" y="35.9" text-anchor="middle"
+            font-family="'ZCOOL XiaoWei', serif" font-size="34"
+            fill="var(--paper)" font-weight="600">1</text>
+    </svg>
   </div>
   <div class="hero-stats">
     <div class="hero-stat">
