@@ -322,8 +322,8 @@
   <p class="hero-desc">自驾 · 行旅 · 记录</p>
   <div class="hero-line"></div>
   <div class="hero-meta">
-    <span><strong id="trip-count">1</strong> 次旅行</span>
-    <span><strong id="km-count">1,380</strong> 公里</span>
+    <span><strong id="trip-count">—</strong> 次旅行</span>
+    <span><strong id="km-count">—</strong> 公里</span>
     <span><strong id="city-count">6</strong> 座城市</span>
   </div>
 </div>
@@ -363,6 +363,60 @@
   十四行记 · 两人同行
   <span class="sub">github.io · static travel journal</span>
 </div>
+
+<script>
+  // ====== 数据源 ======
+  const trips = [
+    {
+      id: 'trip-1',
+      file: 'trips/2026-05-xiy-bjs.html',
+      start: '2026-05-01',
+      end: '2026-05-07',
+      days: 7,
+      km: 1380,
+      status: 'completed',
+      route: ['西安', '洛阳', '平遥', '北京'],
+      title: '五一自驾 · 穿越中原与山西',
+      summary: '西安 → 北京 · 五一七日'
+    },
+    {
+      id: 'trip-2',
+      file: 'trips/2026-05-bjs-tsn.html',
+      start: '2026-05-16',
+      end: '2026-05-17',
+      days: 2,
+      km: 260,
+      status: 'planning',
+      route: ['北京', '天津'],
+      title: '周末两日 · 海河与五大道',
+      summary: '北京 → 天津 · 周末两日'
+    }
+  ].sort((a, b) => a.start.localeCompare(b.start));
+
+  // 运行时序号 = 数组索引 + 1（按 start 升序）
+  trips.forEach((t, i) => { t.seq = i + 1; });
+
+  // ====== 朱印徽章模板 ======
+  function tripBadge(n, opts) {
+    const size = (opts && opts.size) || 32;
+    const fontSize = Math.round(size * 0.7);
+    return `<svg class="trip-seal" viewBox="0 0 48 48" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" aria-label="第${n}段">
+      <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
+      <text x="24" y="${24 + fontSize * 0.35}" text-anchor="middle"
+            font-family="'ZCOOL XiaoWei', serif" font-size="${fontSize}"
+            fill="var(--paper)" font-weight="600">${n}</text>
+    </svg>`;
+  }
+
+  // ====== 自动 hero 统计 ======
+  (function updateHeroStats() {
+    const tc = document.getElementById('trip-count');
+    const km = document.getElementById('km-count');
+    if (tc) tc.textContent = trips.length;
+    if (km) km.textContent = trips.reduce((s, t) => s + t.km, 0).toLocaleString();
+    // city-count 保留手填（route 数据未完整时不自动算）
+  })();
+</script>
 
 </body>
 </html>
