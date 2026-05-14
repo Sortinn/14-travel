@@ -19,11 +19,14 @@ https://sortinn.github.io/14-travel/
 
 ```
 .
-├── index.html          # 首页，旅行总览与入口
-├── 2026-05-xiy-bjs.html  # 行程记录（一个文件 = 一段旅途）
-├── travel-status-demo.html # 状态徽章视觉预览
-├── 更新日志.md          # 迭代记录
-└── README.md           # 项目说明
+├── index.html                  # 首页，旅行总览与入口
+├── trips/                      # 行程页（一个文件 = 一段旅途）
+│   └── 2026-05-xiy-bjs.html
+├── demos/                      # 视觉/技术预览
+│   └── travel-status-demo.html
+├── docs/                       # 文档
+│   └── 更新日志.md
+└── README.md                   # 项目说明
 ```
 
 ---
@@ -32,7 +35,7 @@ https://sortinn.github.io/14-travel/
 
 | 行程                                           | 时间           | 里程        |
 | ---------------------------------------------- | -------------- | ----------- |
-| [五一自驾 · XIY → BJS](./2026-05-xiy-bjs.html) | 2026.5.1 – 5.7 | 约 1,380 km |
+| [五一自驾 · XIY → BJS](./trips/2026-05-xiy-bjs.html) | 2026.5.1 – 5.7 | 约 1,380 km |
 
 ---
 
@@ -56,7 +59,7 @@ https://sortinn.github.io/14-travel/
 
 ## 更新日志
 
-详见 [更新日志.md](./更新日志.md)
+详见 [更新日志.md](./docs/更新日志.md)
 
 ---
 
