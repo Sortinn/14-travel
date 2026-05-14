@@ -311,6 +311,140 @@
     background: rgba(255, 255, 255, 0.06);
     border: 1px dashed rgba(255, 255, 255, 0.2);
   }
+
+  /* ============================
+     热力图 · Travel Heatmap
+     ============================ */
+  .heatmap {
+    margin: 24px 24px 8px;
+    padding: 16px 18px;
+    background: white;
+    border: 1px solid var(--paper-mid);
+    border-radius: 12px;
+  }
+  .heatmap-toggle {
+    display: inline-flex;
+    background: var(--paper-warm);
+    border-radius: 999px;
+    padding: 3px;
+    margin-bottom: 12px;
+  }
+  .heatmap-toggle button {
+    border: 0;
+    background: transparent;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    color: var(--ink-mid);
+    padding: 5px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.18s, color 0.18s;
+  }
+  .heatmap-toggle button.active {
+    background: var(--accent);
+    color: var(--paper);
+    font-weight: 400;
+  }
+  .heatmap-stats {
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  .heatmap-stats strong {
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .heatmap-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: opacity 0.15s;
+  }
+  .heatmap-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .heatmap-year-label {
+    width: 36px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 13px;
+    color: var(--ink-mid);
+    flex-shrink: 0;
+  }
+  .heatmap-cell {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    background: transparent;
+    border: 1px solid var(--paper-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .heatmap-cell[data-level="1"] { background: var(--paper-mid); border-color: var(--paper-mid); }
+  .heatmap-cell[data-level="2"] { background: var(--gold-light); border-color: var(--gold-light); }
+  .heatmap-cell[data-level="3"] { background: var(--gold); border-color: var(--gold); }
+  .heatmap-cell a { line-height: 0; }
+  .heatmap-cell .trip-seal { cursor: pointer; }
+  .heatmap-cell a + a { margin-left: -8px; }
+  .heatmap-cell sup {
+    font-size: 9px;
+    color: var(--ink);
+    margin-left: 2px;
+  }
+
+  .heatmap-months {
+    display: flex;
+    gap: 4px;
+    margin-left: 40px;
+    margin-bottom: 4px;
+  }
+  .heatmap-months span {
+    width: 26px;
+    text-align: center;
+    font-size: 9px;
+    color: var(--stone);
+    letter-spacing: 0;
+  }
+
+  .heatmap-year-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .heatmap-year-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .heatmap-year-cell {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    border: 1px solid var(--paper-mid);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    gap: 2px;
+  }
+  .heatmap-year-cell[data-level="1"] { background: var(--paper-mid); border-color: var(--paper-mid); }
+  .heatmap-year-cell[data-level="2"] { background: var(--gold-light); border-color: var(--gold-light); }
+  .heatmap-year-cell[data-level="3"] { background: var(--gold); border-color: var(--gold); }
+  .heatmap-year-cell a { line-height: 0; }
+  .heatmap-year-item-label {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 12px;
+    color: var(--ink-mid);
+  }
 </style>
 </head>
 <body>
@@ -327,6 +461,15 @@
     <span><strong id="city-count">6</strong> 座城市</span>
   </div>
 </div>
+
+<section class="heatmap" id="heatmap">
+  <div class="heatmap-toggle">
+    <button type="button" data-mode="month" class="active">月度</button>
+    <button type="button" data-mode="year">年度</button>
+  </div>
+  <div class="heatmap-stats" id="heatmap-stats">—</div>
+  <div class="heatmap-grid" id="heatmap-grid"></div>
+</section>
 
 <div class="year-group">
   <div class="year-label">
@@ -437,6 +580,154 @@
     if (tcEl) tcEl.textContent = trips.length;
     if (kmEl) kmEl.textContent = trips.reduce((s, t) => s + t.km, 0).toLocaleString();
     // city-count 保留手填（route 数据未完整时不自动算）
+  })();
+
+  // ====== 热力图：通用工具 ======
+  function tripMonths(t) {
+    // 返回该 trip 涵盖的 [{year, month, daysInMonth}]
+    const s = new Date(t.start), e = new Date(t.end);
+    const out = [];
+    let y = s.getFullYear(), m = s.getMonth();
+    const ey = e.getFullYear(), em = e.getMonth();
+    while (y < ey || (y === ey && m <= em)) {
+      const monthStart = new Date(y, m, 1);
+      const monthEnd = new Date(y, m + 1, 0);
+      const overlapStart = s > monthStart ? s : monthStart;
+      const overlapEnd = e < monthEnd ? e : monthEnd;
+      const days = Math.round((overlapEnd - overlapStart) / 86400000) + 1;
+      out.push({ year: y, month: m, days });
+      m++; if (m > 11) { m = 0; y++; }
+    }
+    return out;
+  }
+
+  function levelByDays(d) {
+    if (d <= 0) return 0;
+    if (d <= 2) return 1;
+    if (d <= 5) return 2;
+    return 3;
+  }
+
+  function levelByKm(km) {
+    if (km <= 0) return 0;
+    if (km < 500) return 1;
+    if (km < 1500) return 2;
+    return 3;
+  }
+
+  // ====== 月度视图渲染 ======
+  function renderMonthView() {
+    const grid = document.getElementById('heatmap-grid');
+    const stats = document.getElementById('heatmap-stats');
+    if (!grid || !stats) return;
+
+    // 聚合：year -> month -> { days, trips: [seq] }
+    const agg = {};
+    const monthCounter = {};
+    trips.forEach(t => {
+      tripMonths(t).forEach(({ year, month, days }) => {
+        agg[year] = agg[year] || {};
+        agg[year][month] = agg[year][month] || { days: 0, trips: [] };
+        agg[year][month].days += days;
+        agg[year][month].trips.push(t.seq);
+        monthCounter[month + 1] = (monthCounter[month + 1] || 0) + 1;
+      });
+    });
+
+    // 找峰值月
+    let peakMonth = null, peakCount = 0;
+    Object.keys(monthCounter).forEach(m => {
+      if (monthCounter[m] > peakCount) { peakCount = monthCounter[m]; peakMonth = m; }
+    });
+
+    const years = Object.keys(agg).sort();
+    const totalKm = trips.reduce((s, t) => s + t.km, 0);
+    stats.innerHTML = `累计 <strong>${trips.length}</strong> 趟 · <strong>${totalKm.toLocaleString()}</strong> km · 跨 <strong>${years.length}</strong> 年${peakMonth ? ` · 出行最多月份 <strong>${peakMonth} 月</strong>` : ''}`;
+
+    let html = `<div class="heatmap-months"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>`;
+    years.forEach(y => {
+      html += `<div class="heatmap-row"><span class="heatmap-year-label">${y}</span>`;
+      for (let m = 0; m < 12; m++) {
+        const cell = agg[y][m];
+        const lvl = cell ? levelByDays(cell.days) : 0;
+        const title = cell
+          ? `${y}.${m + 1} · ${cell.days} 天 · ${cell.trips.length} 趟`
+          : `${y}.${m + 1} · 无出行`;
+        let inner = '';
+        if (cell) {
+          const seals = cell.trips.slice(0, 2).map(n => `<a href="#trip-${n}">${tripBadge(n, { size: 22 })}</a>`).join('');
+          inner = seals + (cell.trips.length > 2 ? '<sup>+</sup>' : '');
+        }
+        html += `<div class="heatmap-cell" data-level="${lvl}" title="${title}">${inner}</div>`;
+      }
+      html += `</div>`;
+    });
+    grid.innerHTML = html;
+  }
+
+  // ====== 年度视图渲染 ======
+  function renderYearView() {
+    const grid = document.getElementById('heatmap-grid');
+    const stats = document.getElementById('heatmap-stats');
+    if (!grid || !stats) return;
+
+    // 聚合：year -> { km, days, trips: [seq] }
+    const agg = {};
+    trips.forEach(t => {
+      const y = new Date(t.start).getFullYear();
+      agg[y] = agg[y] || { km: 0, days: 0, trips: [] };
+      agg[y].km += t.km;
+      agg[y].days += t.days;
+      agg[y].trips.push(t.seq);
+    });
+
+    const years = Object.keys(agg).sort();
+    const totalKm = trips.reduce((s, t) => s + t.km, 0);
+    const uniqueCities = new Set();
+    trips.forEach(t => (t.route || []).forEach(c => uniqueCities.add(c)));
+    const recentYear = years[years.length - 1];
+    const recentCount = recentYear ? agg[recentYear].trips.length : 0;
+
+    stats.innerHTML = `累计 <strong>${trips.length}</strong> 趟 · <strong>${totalKm.toLocaleString()}</strong> km · 跨 <strong>${uniqueCities.size}</strong> 城 · 最近一年 <strong>${recentCount}</strong> 趟`;
+
+    let html = `<div class="heatmap-year-row">`;
+    years.forEach(y => {
+      const cell = agg[y];
+      const lvl = levelByKm(cell.km);
+      const title = `${y} · ${cell.trips.length} 趟 · ${cell.days} 天 · ${cell.km.toLocaleString()} km`;
+      const seals = cell.trips.slice(0, 6).map(n => `<a href="#trip-${n}">${tripBadge(n, { size: 18 })}</a>`).join('');
+      const ellipsis = cell.trips.length > 6 ? '<sup>…</sup>' : '';
+      html += `<div class="heatmap-year-item">
+        <div class="heatmap-year-cell" data-level="${lvl}" title="${title}">${seals}${ellipsis}</div>
+        <span class="heatmap-year-item-label">${y}</span>
+      </div>`;
+    });
+    html += `</div>`;
+    grid.innerHTML = html;
+  }
+
+  // ====== 切换 + localStorage ======
+  function setHeatmapMode(mode) {
+    const buttons = document.querySelectorAll('.heatmap-toggle button');
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    const grid = document.getElementById('heatmap-grid');
+    if (grid) grid.style.opacity = '0';
+    setTimeout(() => {
+      if (mode === 'year') renderYearView(); else renderMonthView();
+      if (grid) grid.style.opacity = '1';
+    }, 150);
+    try { localStorage.setItem('tx-heatmap-mode', mode); } catch (e) {}
+  }
+
+  (function initHeatmap() {
+    let mode = 'month';
+    try { mode = localStorage.getItem('tx-heatmap-mode') || 'month'; } catch (e) {}
+    const buttons = document.querySelectorAll('.heatmap-toggle button');
+    buttons.forEach(b => {
+      b.addEventListener('click', () => setHeatmapMode(b.dataset.mode));
+      b.classList.toggle('active', b.dataset.mode === mode);
+    });
+    if (mode === 'year') renderYearView(); else renderMonthView();
   })();
 </script>
 
