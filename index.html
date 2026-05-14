@@ -389,16 +389,16 @@
     background: transparent;
   }
   .heatmap-row {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 48px repeat(12, 26px);
     gap: 4px;
+    align-items: center;
   }
   .heatmap-year-label {
-    width: 36px;
     font-family: 'ZCOOL XiaoWei', serif;
     font-size: 13px;
     color: var(--ink-mid);
-    flex-shrink: 0;
+    white-space: nowrap;
   }
   .heatmap-cell {
     width: 26px;
@@ -425,13 +425,12 @@
   }
 
   .heatmap-months {
-    display: flex;
+    display: grid;
+    grid-template-columns: 48px repeat(12, 26px);
     gap: 4px;
-    margin-left: 40px;
     margin-bottom: 4px;
   }
   .heatmap-months span {
-    width: 26px;
     text-align: center;
     font-size: 9px;
     color: var(--stone);
@@ -669,7 +668,7 @@
     const totalKm = trips.reduce((s, t) => s + t.km, 0);
     stats.innerHTML = `累计 <strong>${trips.length}</strong> 趟 · <strong>${totalKm.toLocaleString()}</strong> km · 跨 <strong>${years.length}</strong> 年${peakMonth ? ` · 出行最多月份 <strong>${peakMonth} 月</strong>` : ''}`;
 
-    let html = `<div class="heatmap-months"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>`;
+    let html = `<div class="heatmap-months"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>`;
     years.forEach(y => {
       html += `<div class="heatmap-row"><span class="heatmap-year-label">${y}</span>`;
       for (let m = 0; m < 12; m++) {
