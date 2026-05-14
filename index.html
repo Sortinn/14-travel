@@ -371,6 +371,22 @@
     flex-direction: column;
     gap: 6px;
     transition: opacity 0.15s;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--paper-mid) transparent;
+    padding-bottom: 2px;
+  }
+  .heatmap-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+  .heatmap-grid::-webkit-scrollbar-thumb {
+    background: var(--paper-mid);
+    border-radius: 2px;
+  }
+  .heatmap-grid::-webkit-scrollbar-track {
+    background: transparent;
   }
   .heatmap-row {
     display: flex;
