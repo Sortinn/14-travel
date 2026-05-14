@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北京 → 天津 · 周末两日 | 十四行记</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600&family=ZCOOL+XiaoWei&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2c1f14;
+    --ink-mid: #5a3e28;
+    --ink-light: #9a7a60;
+    --paper: #faf6ef;
+    --paper-warm: #f3ead8;
+    --paper-mid: #e8dcc8;
+    --accent: #b85c38;
+    --accent-soft: #d4835f;
+    --gold: #c8973a;
+    --gold-light: #e8c470;
+    --sage: #7a9e7e;
+    --sage-light: #a8c5aa;
+    --stone: #8a7968;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    padding: 48px 28px 36px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 80% 20%, rgba(200,151,58,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(184,92,56,0.14) 0%, transparent 55%);
+  }
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold-light);
+    background: rgba(200,151,58,0.15);
+    border: 1px solid rgba(200,151,58,0.35);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 34px;
+    color: #f5edd8;
+    line-height: 1.25;
+    letter-spacing: 2px;
+    position: relative;
+  }
+  .hero h1 span {
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    margin-top: 10px;
+    font-size: 13px;
+    color: rgba(245,237,216,0.55);
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 28px;
+    position: relative;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.05);
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 10px;
+    color: rgba(245,237,216,0.45);
+    letter-spacing: 1px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── ROUTE BAR ─── */
+  .route-bar {
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-mid);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .route-bar::-webkit-scrollbar { display: none; }
+  .route-city {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .route-city .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-bottom: 6px;
+  }
+  .route-city .dot.end { background: var(--gold); }
+  .route-city .dot.via {
+    width: 6px; height: 6px;
+    background: var(--stone);
+    opacity: 0.6;
+  }
+  .route-city span {
+    font-size: 11px;
+    color: var(--ink-mid);
+    white-space: nowrap;
+    letter-spacing: 1px;
+  }
+  .route-city span.via-label {
+    font-size: 10px;
+    color: var(--stone);
+    opacity: 0.7;
+  }
+  .route-line {
+    flex: 1;
+    min-width: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-soft), var(--gold));
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .route-line::after {
+    content: '›';
+    position: absolute;
+    right: -2px;
+    top: -8px;
+    font-size: 10px;
+    color: var(--gold);
+  }
+
+  /* ─── CARE NOTICE ─── */
+  .care-notice {
+    margin: 20px 24px 0;
+    background: linear-gradient(135deg, #fdf6ee, #f8eedd);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+  }
+  .care-notice .care-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .care-notice p {
+    font-size: 12.5px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+  }
+
+  /* ─── SECTION ─── */
+  .section-label {
+    padding: 28px 24px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::before {
+    content: '';
+    width: 3px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-label span {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 16px;
+    color: var(--ink);
+    letter-spacing: 2px;
+  }
+
+  /* ─── DAY CARDS ─── */
+  .days {
+    padding: 0 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .day-card {
+    position: relative;
+    padding-left: 52px;
+    padding-bottom: 32px;
+  }
+  .day-card:last-child { padding-bottom: 0; }
+  .day-card::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 36px;
+    bottom: 0;
+    width: 1px;
+    background: var(--paper-mid);
+  }
+  .day-card:last-child::before { display: none; }
+  .day-num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .day-num span {
+    font-size: 7px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+    line-height: 1;
+  }
+  .day-num strong {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 14px;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .day-card.driving .day-num { background: var(--accent); }
+  .day-card.explore .day-num { background: var(--sage); }
+
+  .day-inner {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--paper-mid);
+    overflow: hidden;
+  }
+  .day-header {
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid var(--paper-warm);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .day-header h3 {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 17px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .day-header .date-tag {
+    font-size: 10px;
+    color: var(--stone);
+    background: var(--paper-warm);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    margin-left: 8px;
+    margin-top: 2px;
+  }
+  .drive-info {
+    display: flex;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--paper-mid);
+  }
+  .drive-info .di {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11.5px;
+    color: var(--ink-light);
+  }
+  .drive-info .di svg {
+    width: 13px;
+    height: 13px;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .day-body {
+    padding: 14px 16px;
+  }
+  .spot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .spot {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .spot-time {
+    font-size: 10px;
+    color: var(--accent-soft);
+    width: 28px;
+    flex-shrink: 0;
+    padding-top: 1px;
+    letter-spacing: 0.3px;
+  }
+  .spot-content {}
+  .spot-name {
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .spot-desc {
+    font-size: 11.5px;
+    color: var(--stone);
+    margin-top: 2px;
+    line-height: 1.6;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+  .tag-easy { background: #eef5ee; color: var(--sage); }
+  .tag-culture { background: #fdf3e8; color: var(--gold); }
+  .tag-nature { background: #e8f3f0; color: #5a9e8a; }
+  .tag-food { background: #fdeee8; color: var(--accent-soft); }
+  .tag-rest { background: #f3eef8; color: #8a6aaa; }
+
+  .day-footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--paper-warm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hotel-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--stone);
+  }
+  .hotel-info svg { width: 12px; height: 12px; opacity: 0.7; }
+  .hotel-name {
+    font-size: 11.5px;
+    color: var(--ink-mid);
+  }
+
+  /* ─── TIPS ─── */
+  .tips-section {
+    margin: 0 24px 24px;
+    background: var(--ink);
+    border-radius: 12px;
+    padding: 22px 20px;
+    color: rgba(245,237,216,0.85);
+  }
+  .tips-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .tip-item {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 12px 12px;
+  }
+  .tip-item .tip-icon {
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .tip-item p {
+    font-size: 11px;
+    line-height: 1.6;
+    color: rgba(245,237,216,0.65);
+  }
+  .tip-item strong {
+    display: block;
+    font-size: 12px;
+    color: var(--gold-light);
+    margin-bottom: 3px;
+    font-weight: 400;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: var(--stone);
+    letter-spacing: 2px;
+    border-top: 1px solid var(--paper-mid);
+  }
+  .heart { color: var(--accent-soft); }
+
+  .deco-char {
+    position: absolute;
+    right: 24px;
+    bottom: 20px;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 72px;
+    color: rgba(200,151,58,0.07);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .divider {
+    margin: 0 24px 0;
+    height: 1px;
+    background: var(--paper-mid);
+  }
+  .spot-ticket {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 10.5px;
+    color: var(--accent);
+    background: #fdeee8;
+    border-radius: 4px;
+    padding: 2px 8px;
+    letter-spacing: 0.3px;
+    line-height: 1.6;
+  }
+  .hotel-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hotel-badge-todo {
+    background: #fdeee8;
+    color: var(--accent);
+    border: 1px dashed var(--accent-soft);
+  }
+  .hotel-badge-stay {
+    background: #eef5ee;
+    color: var(--sage);
+  }
+
+  /* ============================
+     旅行状态徽章 · Trip Status
+     ============================ */
+  .trip-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .trip-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* 规划中 */
+  .trip-status[data-status="planning"] {
+    color: var(--ink-light, #9a7a60);
+    background: var(--paper-mid, #e8dcc8);
+    border: 1px dashed var(--ink-light, #9a7a60);
+  }
+  .trip-status[data-status="planning"]::before {
+    background: var(--ink-light, #9a7a60);
+    opacity: 0.6;
+  }
+
+  /* 进行中 */
+  .trip-status[data-status="active"] {
+    color: var(--gold, #c8973a);
+    background: rgba(200, 151, 58, 0.1);
+    border: 1px solid var(--gold-light, #e8c470);
+  }
+  .trip-status[data-status="active"]::before {
+    background: var(--gold, #c8973a);
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  /* 已完成 */
+  .trip-status[data-status="completed"] {
+    color: var(--sage, #7a9e7e);
+    background: rgba(122, 158, 126, 0.1);
+    border: 1px solid var(--sage, #7a9e7e);
+  }
+  .trip-status[data-status="completed"]::before {
+    background: var(--sage, #7a9e7e);
+  }
+
+  /* 深色背景版（用于详情页 Hero 区） */
+  .trip-status.on-dark[data-status="completed"] {
+    color: var(--sage, #7a9e7e);
+    background: rgba(122, 158, 126, 0.15);
+    border-color: rgba(122, 158, 126, 0.4);
+  }
+  .trip-status.on-dark[data-status="active"] {
+    color: var(--gold-light, #e8c470);
+    background: rgba(232, 196, 112, 0.15);
+    border-color: rgba(232, 196, 112, 0.4);
+  }
+  .trip-status.on-dark[data-status="planning"] {
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+  }
+
+  /* 朱印徽章定位（hero 右上） */
+  .hero-seal-wrap {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="deco-char">津</div>
+  <div class="hero-badge">2026 周末 · 京津</div>
+  <h1>北京 <span>→</span> 天津<br>周末两日</h1>
+  <p class="hero-sub">May 16 – 17, 2026 &nbsp;·&nbsp; 自驾 · 海河与五大道</p>
+  <div style="margin-top: 12px;">
+    <span class="trip-status on-dark" data-status="planning">规划中</span>
+  </div>
+  <div class="hero-seal-wrap">
+    <svg class="trip-seal" viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg" aria-label="第2段">
+      <rect x="2" y="2" width="44" height="44" rx="6" fill="var(--accent)"/>
+      <text x="24" y="32" text-anchor="middle"
+            font-family="'ZCOOL XiaoWei', serif" font-size="34"
+            fill="var(--paper)" font-weight="600">2</text>
+    </svg>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">2</span>
+      <span class="lbl">天数</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">260</span>
+      <span class="lbl">总里程 km</span>
+    </div>
+    <div class="hero-stat">
+      <span class="num">1</span>
+      <span class="lbl">途经城市</span>
+    </div>
+  </div>
+</div>
+
+<!-- ROUTE BAR -->
+<div class="route-bar">
+  <div class="route-city">
+    <div class="dot"></div>
+    <span>北京</span>
+  </div>
+  <div class="route-line"></div>
+  <div class="route-city">
+    <div class="dot end"></div>
+    <span>天津</span>
+  </div>
+</div>
+
+<!-- DAY LIST -->
+<div class="section-label">
+  <span>行程安排</span>
+</div>
+
+<div class="days">
+
+  <!-- DAY 1 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>1</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>北京 → 天津<br>入城与海河</h3>
+        <span class="date-tag">5月16日 周六</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 130 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          驾车约 1.5 小时
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          京津高速
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">8:30</span>
+            <div class="spot-content">
+              <div class="spot-name">北京出发，京津高速直抵天津</div>
+              <div class="spot-desc">遇堵可改京沪高速。预计 10:00 前后抵达。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">12:00</span>
+            <div class="spot-content">
+              <div class="spot-name">桂园餐厅 · 睦南道</div>
+              <div class="spot-desc">津菜老字号，主打砂锅鱼头。备选：起士林（俄式 1901）、利顺德西餐厅。</div>
+              <span class="tag tag-food">美食推荐</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">下午</span>
+            <div class="spot-content">
+              <div class="spot-name">五大道 + 民园广场</div>
+              <div class="spot-desc">民国洋楼街区，共享单车骑行。可加挂瓷房子（粤唯鲜博物馆）。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">黄昏</span>
+            <div class="spot-content">
+              <div class="spot-name">海河沿岸散步 · 津湾广场方向</div>
+              <div class="spot-desc">入夜灯光起，海河两岸建筑群灯光秀。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">19:00</span>
+            <div class="spot-content">
+              <div class="spot-name">宇航员餐厅 · 意风区</div>
+              <div class="spot-desc">新派津味，氛围年轻。备选：阿利雅意餐。</div>
+              <span class="tag tag-food">美食推荐</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          住宿建议
+        </div>
+        <span class="hotel-name">利顺德大饭店 · 海河边</span>
+        <span class="hotel-badge hotel-badge-todo">待预订</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card driving">
+    <div class="day-num">
+      <span>DAY</span>
+      <strong>2</strong>
+    </div>
+    <div class="day-inner">
+      <div class="day-header">
+        <h3>古城与归途<br>天津 → 北京</h3>
+        <span class="date-tag">5月17日 周日</span>
+      </div>
+      <div class="drive-info">
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M12 3l9 9-9 9"/></svg>
+          约 130 km
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          驾车约 1.5 小时
+        </div>
+        <div class="di">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          京津高速回京
+        </div>
+      </div>
+      <div class="day-body">
+        <div class="spot-list">
+          <div class="spot">
+            <span class="spot-time">8:00</span>
+            <div class="spot-content">
+              <div class="spot-name">南楼煎饼 · 红桥区</div>
+              <div class="spot-desc">本地热门早点，需排队。备选：大福来嘎巴菜（鼓楼店）、二嫂子煎饼。</div>
+              <span class="tag tag-food">美食推荐</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">上午</span>
+            <div class="spot-content">
+              <div class="spot-name">古文化街</div>
+              <div class="spot-desc">天后宫、泥人张、杨柳青年画。可加挂天津之眼（9:00 摩天轮早班）。</div>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">12:30</span>
+            <div class="spot-content">
+              <div class="spot-name">登瀛楼鸿起顺 · 滨江道</div>
+              <div class="spot-desc">津菜老字号。备选：红旗饭庄、海河码头海鲜。</div>
+              <span class="tag tag-food">美食推荐</span>
+            </div>
+          </div>
+          <div class="spot">
+            <span class="spot-time">14:00</span>
+            <div class="spot-content">
+              <div class="spot-name">京津高速返京</div>
+              <div class="spot-desc">建议下午尽早返京，避开周日晚高峰。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="day-footer">
+        <div class="hotel-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          晚餐
+        </div>
+        <span class="hotel-name">回京后晚饭</span>
+        <span class="hotel-badge hotel-badge-todo">家中</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PLANNING NOTES -->
+<div class="section-label">
+  <span>备注 · 待补</span>
+</div>
+<div style="margin: 0 24px 24px; padding: 16px 18px; background: var(--paper-warm); border-radius: 12px; font-size: 13px; line-height: 1.9; color: var(--ink-mid);">
+  <p style="margin-bottom: 8px;"><strong>行前待办：</strong></p>
+  <ul style="margin-left: 18px; margin-bottom: 14px;">
+    <li>确认住宿（利顺德 vs 海河金茂凯悦 vs 民宿）</li>
+    <li>是否预约相声茶馆周六晚场</li>
+    <li>桂园 / 宇航员 / 登瀛楼 三家是否需要预订</li>
+  </ul>
+  <p style="margin-bottom: 8px;"><strong>回京后：</strong></p>
+  <ul style="margin-left: 18px;">
+    <li>补实拍图、感受</li>
+    <li>把状态徽章 <code>data-status</code> 改为 <code>completed</code></li>
+    <li>更新里程实际值（如有偏差）</li>
+  </ul>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  一路山河壮阔，愿卿安康<span class="heart"> ♥</span>
+</div>
+
+</body>
+</html>
