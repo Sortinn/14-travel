@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十四行记 · 旅行状态功能预览</title>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+  /* ========================================
+     十四行记 · 基础变量（与你现有一致）
+     ======================================== */
+  :root {
+    --ink: #2c1f14;
+    --ink-mid: #5a3e28;
+    --ink-light: #9a7a60;
+    --paper: #faf6ef;
+    --paper-warm: #f3ead8;
+    --paper-mid: #e8dcc8;
+    --accent: #b85c38;
+    --accent-soft: #d4835f;
+    --gold: #c8973a;
+    --gold-light: #e8c470;
+    --sage: #7a9e7e;
+    --stone: #8a7968;
+  }
+
+  /* ========================================
+     ✂️ 以下为新增状态功能 CSS
+     复制到你的样式表即可
+     ======================================== */
+
+  /* --- 状态徽章 · 通用 --- */
+  .trip-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .trip-status::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* --- 规划中 · Planning --- */
+  .trip-status[data-status="planning"] {
+    color: var(--ink-light);
+    background: var(--paper-mid);
+    border: 1px solid var(--ink-light);
+    border-style: dashed;
+  }
+  .trip-status[data-status="planning"]::before {
+    background: var(--ink-light);
+    opacity: 0.6;
+  }
+
+  /* --- 进行中 · Active --- */
+  .trip-status[data-status="active"] {
+    color: var(--gold);
+    background: rgba(200, 151, 58, 0.1);
+    border: 1px solid var(--gold-light);
+  }
+  .trip-status[data-status="active"]::before {
+    background: var(--gold);
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  /* --- 已完成 · Completed --- */
+  .trip-status[data-status="completed"] {
+    color: var(--sage);
+    background: rgba(122, 158, 126, 0.1);
+    border: 1px solid var(--sage);
+  }
+  .trip-status[data-status="completed"]::before {
+    background: var(--sage);
+  }
+
+  /* --- 详情页 Hero 内的状态（浅色文字版） --- */
+  .trip-status.on-dark[data-status="completed"] {
+    color: var(--sage);
+    background: rgba(122, 158, 126, 0.15);
+    border-color: rgba(122, 158, 126, 0.4);
+  }
+  .trip-status.on-dark[data-status="active"] {
+    color: var(--gold-light);
+    background: rgba(232, 196, 112, 0.15);
+    border-color: rgba(232, 196, 112, 0.4);
+  }
+  .trip-status.on-dark[data-status="planning"] {
+    color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+    border-style: dashed;
+  }
+
+  /* ========================================
+     以下为演示页面专用样式（不需要复制）
+     ======================================== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .demo-section {
+    margin-bottom: 48px;
+  }
+  .demo-label {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .demo-sublabel {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  /* 演示：首页卡片 */
+  .demo-card {
+    background: var(--paper);
+    border: 1px solid var(--paper-mid);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(44, 31, 20, 0.06);
+  }
+  .demo-card-body {
+    padding: 20px;
+    position: relative;
+  }
+  .demo-card-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 18px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .demo-card-sub {
+    font-size: 13px;
+    color: var(--ink-mid);
+    margin-bottom: 12px;
+  }
+  .demo-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .demo-card-info {
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  /* 演示：详情页 Hero */
+  .demo-hero {
+    background: linear-gradient(135deg, #1a1410 0%, #2c2018 50%, #1a1410 100%);
+    border-radius: 12px;
+    padding: 36px 24px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .demo-hero-date {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .demo-hero-title {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 22px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
+  }
+
+  /* 演示：独立徽章展示 */
+  .badge-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--paper-mid);
+    margin: 40px 0;
+  }
+
+  .code-hint {
+    font-size: 11px;
+    color: var(--stone);
+    background: var(--paper-warm);
+    padding: 12px 16px;
+    border-radius: 8px;
+    line-height: 1.8;
+    font-family: 'SF Mono', 'Menlo', monospace;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .page-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 28px;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .page-sub {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-bottom: 40px;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">旅行状态 · 功能预览</p>
+<p class="page-sub">三种状态 × 两个场景</p>
+
+<!-- ==================== 徽章一览 ==================== -->
+<div class="demo-section">
+  <p class="demo-label">三种状态徽章</p>
+  <p class="demo-sublabel">圆点 + 文字，进行中带呼吸动画</p>
+  <div class="badge-row">
+    <span class="trip-status" data-status="planning">规划中</span>
+    <span class="trip-status" data-status="active">进行中</span>
+    <span class="trip-status" data-status="completed">已完成</span>
+  </div>
+  <div class="code-hint">&lt;span class="trip-status" data-status="completed"&gt;已完成&lt;/span&gt;</div>
+</div>
+
+<hr class="divider">
+
+<!-- ==================== 场景一：首页卡片 ==================== -->
+<div class="demo-section">
+  <p class="demo-label">场景一 · 首页旅行卡片</p>
+  <p class="demo-sublabel">状态徽章在卡片底部，与行程信息并排</p>
+
+  <div class="demo-card">
+    <div class="demo-card-body">
+      <p class="demo-card-title">西安→洛阳→平遥→北京</p>
+      <p class="demo-card-sub">五一自驾 · 穿越中原与山西</p>
+      <div class="demo-card-meta">
+        <span class="demo-card-info">自驾 7 天 · 约 1,380 km</span>
+        <span class="trip-status" data-status="completed">已完成</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <div class="demo-card-body">
+      <p class="demo-card-title">成都→稻城→丽江</p>
+      <p class="demo-card-sub">暑期自驾 · 川西入云南</p>
+      <div class="demo-card-meta">
+        <span class="demo-card-info">自驾 10 天 · 约 2,100 km</span>
+        <span class="trip-status" data-status="active">进行中</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-card">
+    <div class="demo-card-body">
+      <p class="demo-card-title">厦门→潮汕→广州</p>
+      <p class="demo-card-sub">国庆自驾 · 闽粤海岸线</p>
+      <div class="demo-card-meta">
+        <span class="demo-card-info">自驾 5 天 · 约 900 km</span>
+        <span class="trip-status" data-status="planning">规划中</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ==================== 场景二：详情页 Hero ==================== -->
+<div class="demo-section">
+  <p class="demo-label">场景二 · 详情页 Hero 区</p>
+  <p class="demo-sublabel">深色背景版，标题下方居中</p>
+
+  <div class="demo-hero">
+    <p class="demo-hero-date">2026 五一长假</p>
+    <p class="demo-hero-title">西安 → 北京 七日自驾</p>
+    <span class="trip-status on-dark" data-status="completed">已完成</span>
+  </div>
+
+  <div class="demo-hero">
+    <p class="demo-hero-date">2026 暑期</p>
+    <p class="demo-hero-title">成都 → 丽江 十日自驾</p>
+    <span class="trip-status on-dark" data-status="active">进行中</span>
+  </div>
+
+  <div class="demo-hero">
+    <p class="demo-hero-date">2026 国庆</p>
+    <p class="demo-hero-title">厦门 → 广州 五日自驾</p>
+    <span class="trip-status on-dark" data-status="planning">规划中</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ==================== 用法说明 ==================== -->
+<div class="demo-section">
+  <p class="demo-label">接入方式</p>
+  <p class="demo-sublabel">纯 CSS + HTML，零 JS 依赖</p>
+
+  <p style="font-size:13px; color:var(--ink-mid); line-height:2; margin-bottom:12px;">
+    <strong style="color:var(--ink);">① 首页卡片</strong><br>
+    在卡片的信息区域末尾加入徽章
+  </p>
+  <div class="code-hint">&lt;span class="trip-status"
+  data-status="completed"&gt;已完成&lt;/span&gt;
+
+data-status 可选值:
+  "planning"  → 规划中（虚线边框）
+  "active"    → 进行中（金色脉动）
+  "completed" → 已完成（草绿沉稳）</div>
+
+  <p style="font-size:13px; color:var(--ink-mid); line-height:2; margin-top:20px; margin-bottom:12px;">
+    <strong style="color:var(--ink);">② 详情页 Hero</strong><br>
+    深色背景内加 <code>on-dark</code> 类名
+  </p>
+  <div class="code-hint">&lt;span class="trip-status on-dark"
+  data-status="active"&gt;进行中&lt;/span&gt;</div>
+</div>
+
+</body>
+</html>
