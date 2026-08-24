@@ -223,6 +223,135 @@
     letter-spacing: 1px;
   }
 
+  /* ─── 出发之前 · BEFORE DEPARTURE ─── */
+  .before-departure {
+    padding: 24px 24px 4px;
+  }
+  .prep-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .prep-heading span {
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 20px;
+    color: var(--ink);
+    letter-spacing: 2px;
+  }
+  .prep-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--paper-mid);
+  }
+  .prep-card {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 22px 20px;
+    border: 1px solid var(--paper-mid);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    background:
+      linear-gradient(135deg, rgba(200,151,58,0.08), transparent 48%),
+      #fff;
+  }
+  .prep-card::after {
+    content: '';
+    position: absolute;
+    right: 22px;
+    top: 18px;
+    width: 1px;
+    height: 78px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--accent-soft) 0 5px,
+      transparent 5px 10px
+    );
+    opacity: 0.35;
+  }
+  .prep-stamp {
+    position: absolute;
+    right: 12px;
+    bottom: 14px;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(184,92,56,0.22);
+    border-radius: 50%;
+    color: rgba(184,92,56,0.24);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 24px;
+    transform: rotate(-8deg);
+  }
+  .prep-eyebrow {
+    margin-bottom: 5px;
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+  }
+  .prep-card h2 {
+    max-width: 310px;
+    font-family: 'ZCOOL XiaoWei', serif;
+    font-size: 22px;
+    line-height: 1.35;
+    letter-spacing: 1px;
+  }
+  .prep-desc {
+    max-width: 350px;
+    margin-top: 9px;
+    color: var(--stone);
+    font-size: 12px;
+    line-height: 1.75;
+  }
+  .prep-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 13px;
+  }
+  .prep-tag {
+    padding: 2px 8px;
+    border-radius: 3px;
+    color: var(--ink-mid);
+    background: var(--paper-warm);
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+  .prep-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 17px;
+    padding-right: 52px;
+  }
+  .prep-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 6px 13px;
+    border: 1px solid var(--paper-mid);
+    border-radius: 7px;
+    color: var(--ink-mid);
+    background: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .prep-action-primary {
+    color: #fffaf0;
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+  .prep-action:active {
+    transform: scale(0.97);
+    border-color: var(--accent-soft);
+  }
+
   /* ─── FOOTER ─── */
   .footer {
     text-align: center;
@@ -546,6 +675,26 @@
     <p>下一次旅行，待续……</p>
   </div>
 </div>
+
+<section class="before-departure" id="before-departure" aria-labelledby="before-departure-title">
+  <div class="prep-heading">
+    <span id="before-departure-title">出发之前</span>
+  </div>
+  <article class="prep-card">
+    <div class="prep-stamp" aria-hidden="true">备</div>
+    <p class="prep-eyebrow">LONG-DISTANCE FAMILY CAR</p>
+    <h2>家庭长途用车候选清单</h2>
+    <p class="prep-desc">从别克君越的使用习惯出发，整理 9 台六七座 SUV / MPV，并附动力说明、销量参考和试驾路线。</p>
+    <div class="prep-tags" aria-label="内容标签">
+      <span class="prep-tag">长途高速</span>
+      <span class="prep-tag">6–7 座</span>
+      <span class="prep-tag">家庭试驾</span>
+    </div>
+    <div class="prep-actions">
+      <a class="prep-action prep-action-primary" href="guides/2026-family-car-shortlist.html">打开清单</a>
+    </div>
+  </article>
+</section>
 
 <div class="footer">
   十四行记 · 两人同行

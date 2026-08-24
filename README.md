@@ -22,10 +22,14 @@ https://sortinn.github.io/14-travel/
 ├── index.html                  # 首页，旅行总览与入口
 ├── trips/                      # 行程页（一个文件 = 一段旅途）
 │   └── 2026-05-xiy-bjs.html
+├── guides/                     # 出发前的路线、车辆与装备参考
+│   └── 2026-family-car-shortlist.html
 ├── demos/                      # 视觉/技术预览
 │   └── travel-status-demo.html
 ├── docs/                       # 文档
 │   └── 更新日志.md
+├── tests/                      # 静态页面与链接完整性检查
+│   └── site-integrity.mjs
 └── README.md                   # 项目说明
 ```
 
@@ -37,6 +41,15 @@ https://sortinn.github.io/14-travel/
 | ---------------------------------------------- | -------------- | ----------- |
 | [周末两日 · BJS → TSN](./trips/2026-05-bjs-tsn.html) | 2026.5.16 – 5.17 | 约 260 km |
 | [五一自驾 · XIY → BJS](./trips/2026-05-xiy-bjs.html) | 2026.5.1 – 5.7 | 约 1,380 km |
+
+---
+
+## 出发之前
+
+行程之外，也记录和长途自驾直接相关的准备材料。
+
+- [家庭长途用车候选清单](./guides/2026-family-car-shortlist.html)
+- Pages 分享地址：https://sortinn.github.io/14-travel/guides/2026-family-car-shortlist.html
 
 ---
 
@@ -55,6 +68,12 @@ https://sortinn.github.io/14-travel/
 ## 本地预览
 
 双击任意 `.html` 文件即可在浏览器中打开，无需安装任何依赖。
+
+运行静态完整性检查：
+
+```bash
+node tests/site-integrity.mjs
+```
 
 ---
 
