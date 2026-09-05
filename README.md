@@ -49,7 +49,7 @@ https://sortinn.github.io/14-travel/
 
 ## 城市漫游
 
-- [在苏州，顺便走走](./trips/2026-09-suzhou.html)：大字手绘地图、夜游网师园、市区位置示意和 10 段高德路程。
+- [在苏州，顺便走走](./trips/2026-09-suzhou.html)：同系列旅行手账，一周建议安排、大字手绘地图、夜游网师园、市区位置和 10 段高德路程。
 - [路程数值与资料来源](./docs/2026-09-suzhou-notes.md)
 - Pages 分享地址：https://sortinn.github.io/14-travel/trips/2026-09-suzhou.html
 
