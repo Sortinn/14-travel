@@ -21,7 +21,10 @@ https://sortinn.github.io/14-travel/
 .
 ├── index.html                  # 首页，旅行总览与入口
 ├── trips/                      # 行程页（一个文件 = 一段旅途）
-│   └── 2026-05-xiy-bjs.html
+│   ├── 2026-05-xiy-bjs.html
+│   └── 2026-09-suzhou.html
+├── assets/                     # 旅行地图与图片
+│   └── suzhou/
 ├── guides/                     # 出发前的路线、车辆与装备参考
 │   └── 2026-family-car-shortlist.html
 ├── demos/                      # 视觉/技术预览
@@ -44,6 +47,14 @@ https://sortinn.github.io/14-travel/
 
 ---
 
+## 城市漫游
+
+- [在苏州，顺便走走](./trips/2026-09-suzhou.html)：大字手绘地图、夜游网师园、市区位置示意和 10 段高德路程。
+- [路程数值与资料来源](./docs/2026-09-suzhou-notes.md)
+- Pages 分享地址：https://sortinn.github.io/14-travel/trips/2026-09-suzhou.html
+
+---
+
 ## 出发之前
 
 行程之外，也记录和长途自驾直接相关的准备材料。
@@ -62,6 +73,8 @@ https://sortinn.github.io/14-travel/
 ```
 
 例：`2026-05-xiy-bjs.html` — 2026年5月，西安出发，北京抵达。
+
+单城漫游使用 `{年份}-{月份}-{城市}.html`，如 `2026-09-suzhou.html`。
 
 ---
 
