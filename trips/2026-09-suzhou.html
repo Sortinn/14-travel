@@ -40,8 +40,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .hero { position: relative; background: var(--ink); color: #f5edd8; padding: 24px 32px 32px; overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(200,151,58,.18), transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(184,92,56,.14), transparent 55%); pointer-events: none; }
 .hero > * { position: relative; }
-.hero-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.home-link { color: #e8dcc8; font-size: 19px; min-height: 48px; display: inline-flex; align-items: center; text-decoration: none; }
+.hero-top { display: flex; align-items: center; justify-content: flex-end; }
 .hero-seal { display: grid; place-items: center; flex: 0 0 48px; width: 48px; height: 48px; border-radius: 6px; background: var(--accent); color: var(--paper); font-family: var(--title-font); font-size: 34px; line-height: 1; }
 .hero-badge { display: inline-block; color: var(--gold-light); border: 1px solid rgba(200,151,58,.5); background: rgba(200,151,58,.12); padding: 3px 12px; margin-top: 24px; font-size: 18px; border-radius: 2px; }
 .hero h1 { font-family: var(--title-font); font-size: clamp(38px, 6vw, 48px); font-weight: 400; line-height: 1.35; letter-spacing: 2px; margin-top: 18px; }
@@ -170,7 +169,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 @media print {
   body { font-size: 16pt; background: white; }
   .journal { max-width: none; }
-  .contents, .map-actions, .skip-link, .home-link, .footer a { display: none; }
+  .contents, .map-actions, .skip-link, .footer a { display: none; }
   .hero, .featured .day-header, .tips-section { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .day-card, .distance-card, .food-item, .district-list > div { break-inside: avoid; }
   .map-frame { break-inside: avoid; }
@@ -182,7 +181,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 <a class="skip-link" href="#itinerary">跳到行程安排</a>
 <div class="journal" id="top">
   <header class="hero">
-    <div class="hero-top"><a class="home-link" href="../index.html">← 十四行记</a><span class="hero-seal" aria-hidden="true">苏</span></div>
+    <div class="hero-top"><span class="hero-seal" aria-hidden="true">苏</span></div>
     <p class="hero-badge">2026 年 9 月 · 苏州</p>
     <h1>在苏州，<br>顺便走走</h1>
     <p class="hero-sub">培训之外，给自己留一点闲逛的时间。</p>
@@ -397,14 +396,13 @@ a, button { -webkit-tap-highlight-color: transparent; }
   </aside>
   <div class="sources">
     <p>高德查询日期：2026 年 9 月 5 日。354 米取约 350 米，93 米取约 100 米。住宿及培训地点尚未确定，未估算酒店出发距离。</p>
-    <p><a href="https://github.com/Sortinn/14-travel/blob/main/docs/2026-09-suzhou-notes.md">路程数值与资料来源</a></p>
     <p>区划名称参考<a href="https://www.suzhou.gov.cn/szsrmzf/szsqsl2024/202406/ab99babdd9034e00a596ca53cba79c31.shtml" target="_blank" rel="noopener">苏州市政府资料</a>，景点所属区参考<a href="https://wglj.suzhou.gov.cn/szwhgdhlyj/whbf/list_tt.shtml" target="_blank" rel="noopener">市文旅局名录</a>。</p>
   </div>
   </main>
   <footer class="footer">
     <p class="footer-brand">十四行记</p>
     <p>培训之外，留一点时间给苏州。</p>
-    <a href="../index.html">返回旅行首页</a><a href="#top">回到页首</a>
+    <a href="#top">回到页首</a>
   </footer>
 </div>
 <script>
